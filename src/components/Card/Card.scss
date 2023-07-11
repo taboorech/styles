@@ -1,0 +1,48 @@
+.Card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+  box-shadow: 3px 3px 7px #000;
+  overflow: hidden;
+  > div {
+    max-width: 100%;
+    padding: 0.7rem 1rem;
+  }
+  .card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      h2 {
+        margin: 0;
+        font-size: 30px;
+        font-weight: normal;
+      }
+      p {
+        margin: 0;
+        margin-top: 0.7rem;
+      }
+    }
+    .secondary-content {
+      display: flex;
+      align-items: center;
+      width: 10%;
+      justify-content: center;
+      span {
+        font-size: 30px;
+        cursor: pointer;
+      }
+    }
+  }
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 17px;
+  }
+}

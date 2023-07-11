@@ -1,0 +1,108 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+$sizeProcentsSum: 0;
+$sizeProcentStep: percentage((100 / 12) / 100);
+
+@for $i from 1 through 12 {
+  $sizeProcentsSum: $sizeProcentsSum + $sizeProcentStep;
+  .s#{$i} {
+    width: $sizeProcentsSum;
+  }
+
+  .offset-s#{$i} {
+    margin-left: $sizeProcentsSum;
+  }
+  
+  @media screen and (min-width: 600px) {
+    .m#{$i} {
+      width: $sizeProcentsSum;
+    }
+
+    .offset-m#{$i} {
+      margin-left: $sizeProcentsSum;
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    .l#{$i} {
+      width: $sizeProcentsSum !important;
+    }
+
+    .offset-l#{$i} {
+      margin-left: $sizeProcentsSum !important;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .xl#{$i} {
+      width: $sizeProcentsSum !important;
+    }
+
+    .offset-xl#{$i} {
+      margin-left: $sizeProcentsSum !important;
+    }
+  }
+}
+
+.red {
+  background-color: #bb1818;
+}
+
+.red-text {
+  color: #bb1818;
+}
+
+.white-text {
+  color: #FFF;
+}
+
+.gray {
+  background-color: #adadad;
+}
+
+.darkslategray {
+  background-color: darkslategray;
+}
+
+$darkenProcentSum: 1;
+
+@for $i from 1 through 5 {
+  .darken-#{$i} {
+    $darkenProcentSum: $darkenProcentSum - 0.1;
+    filter: brightness(percentage($darkenProcentSum));
+  }
+}
+
+.Backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000;
+  opacity: 0.5;
+  z-index: 2;
+  animation-name: show;
+  animation-duration: .8s;
+  @keyframes show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 0.5;
+    }
+  }
+}
+
+a {
+  display: flex;
+  height: 2rem;
+  text-decoration: none;
+  color:#0059ff;
+  max-width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3rem 1rem;
+}
