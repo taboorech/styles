@@ -45,4 +45,14 @@
     justify-content: space-around;
     font-size: 17px;
   }
+
+  .card-footer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0;
+    a {
+      color: #bb932f;
+    }
+  }
 }

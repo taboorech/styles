@@ -1,6 +1,14 @@
+import { Link } from 'react-router-dom';
 import './Card.scss';
 
 export default function Card(props) {
+
+  const createFooterLinks = (elements) => {
+    return elements.map((element, index) => (
+      <Link key={`footer-links-${index}`} to={element.link}>{element.title}</Link>
+    ));
+  };
+
   return(
     <div className="Card s4">
       <div className={"card-header ".concat(props.className)} style={{backgroundImage: `url('${props.image}')`}}>
@@ -10,7 +18,7 @@ export default function Card(props) {
         </div>
         {props.className?.includes('menu') ? 
         <div className='secondary-content'>
-          <span className='icons dropdown-trigger' onClick={props.onMenuClick}>
+          <span className='icons dropdown-trigger' onClick={props.onMenuClick} dropdown_target={props.dropdown_target}>
             {String.fromCharCode(8942)}
           </span>
         </div> : null}
@@ -19,6 +27,11 @@ export default function Card(props) {
         <div className="card-body">
           {props.children}
         </div>
+      : null}
+      {props.className?.includes('with-footer')?
+        <div className='card-footer'>
+          {createFooterLinks(props.footerLinks)}
+        </div> 
       : null}
     </div>
   )

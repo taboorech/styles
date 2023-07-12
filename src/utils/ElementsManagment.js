@@ -2,14 +2,15 @@ export default class Managment {
   buttonsWavesEffectInit(elements) {
     const buttons = elements;
     buttons.forEach(button => {
-      button.onclick = (event) => {
+      button.addEventListener('click', (event) => {
+        // create wave effect for button
         const circle = document.createElement('span');
         const diameter = Math.max(button.clientWidth, button.clientHeight);
         const radius = diameter / 2;
-        
         circle.style.width = circle.style.height = diameter + "px";
-        circle.style.left = event.clientX - (button.offsetLeft + radius) + "px";
-        circle.style.top = event.clientY - (button.offsetTop + radius) + "px";
+        const buttonSettings = button.getBoundingClientRect();
+        circle.style.left = event.clientX - (buttonSettings.left + radius) + "px";
+        circle.style.top = event.clientY - (buttonSettings.top + radius) + "px";
         circle.classList.add('ripple');
   
         const ripple = document.querySelector('.ripple');
@@ -18,12 +19,12 @@ export default class Managment {
         }
   
         button.appendChild(circle);
-      }
+      })
     });
   }
 
   dropdownInit(dropdownTrigger) {
-    dropdownTrigger.onclick = (event) => {      
+    dropdownTrigger.addEventListener('click', (event) => {      
       const dropdown = document.querySelector(`#${event.target.getAttribute('dropdown_target')}`);
       const dropdownTriggerSettings = dropdownTrigger.getBoundingClientRect();
 
@@ -50,14 +51,42 @@ export default class Managment {
           return dropdown.style.visibility = 'hidden';
         }
       }
-      if(dropdown.classList.contains('active')) {
-        dropdown.classList.remove('active');
-        return dropdown.style.visibility = 'hidden';
-      }
       document.body.appendChild(backdrop);
 
       dropdown.classList.add('active');
       return dropdown.style.visibility = 'visible';
-    }
+    })
+  }
+
+  modalInit(modalTriggers) {
+    modalTriggers.forEach(modalTrigger => {
+      modalTrigger.addEventListener('click', (event) => {
+        const modal = document.querySelector(`#${event.target.getAttribute('modal_target')}`);
+        
+        // create backdrop with settings
+        const backdrop = document.createElement('div');
+        backdrop.classList.add('Backdrop');
+        backdrop.onclick = () => {
+          backdrop.remove();
+          if(modal.classList.contains('active')) {
+            return modal.classList.remove('active');
+          }
+        }
+
+        // set close events for buttons in footer
+        const footerButtons = modal.querySelector('.modal-footer').children;
+        for(let i = 0; i < footerButtons.length; i++) {
+          if(footerButtons[i].tagName === "A" || footerButtons[i].tagName === "BUTTON") {
+            footerButtons[i].onclick = () => {
+              backdrop.click();
+            }
+          }
+        }
+
+        document.body.appendChild(backdrop);
+        
+        return modal.classList.add('active');
+      })
+    })
   }
 }

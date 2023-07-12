@@ -13,7 +13,7 @@ export default function DropdownPage() {
   return(
     <>
       <Button className="dropdown-trigger" dropdown_target = "dropdown1">TRIGGER</Button>
-      <Dropdown id="dropdown1">
+      <Dropdown id="dropdown1" className="s4 m6 l2 xl2">
         <a href="#!">
           <span>FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</span>
         </a>

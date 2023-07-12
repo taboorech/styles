@@ -2,6 +2,11 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+body {
+  padding: 0;
+  margin: 0;
+}
+
 $sizeProcentsSum: 0;
 $sizeProcentStep: percentage((100 / 12) / 100);
 
@@ -47,7 +52,7 @@ $sizeProcentStep: percentage((100 / 12) / 100);
 }
 
 .red {
-  background-color: #bb1818;
+  background-color: #bb1818 !important;
 }
 
 .red-text {
