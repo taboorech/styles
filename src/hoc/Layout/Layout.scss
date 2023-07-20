@@ -87,10 +87,16 @@ $darkenProcentSum: 1;
   right: 0;
   bottom: 0;
   background-color: #000;
-  opacity: 0.5;
+  opacity: 0;
   z-index: 2;
+  visibility: hidden;
+  transition: opacity .7s, visibility .7s;
   animation-name: show;
-  animation-duration: .8s;
+  animation-duration: .7s;
+  &.active {
+    opacity: 0.5;
+    visibility: visible;
+  }
   @keyframes show {
     from {
       opacity: 0;

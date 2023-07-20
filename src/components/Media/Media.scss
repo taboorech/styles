@@ -1,0 +1,47 @@
+.Media-parent {
+  .Media {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    position: default;
+    cursor: zoom-in;
+    z-index: 2;
+    > img {
+      width: 100%;
+      visibility: visible;
+    }
+    &.active {
+      img {
+        transition: visibility .05s;
+        visibility: hidden;
+      }
+    }
+  }
+
+  .Media-clone {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    --begin-left: 0;
+    --begin-top: 0;
+    --begin-width: 0;
+    width: var(--begin-width);
+    visibility: hidden;
+    left: var(--begin-left);
+    top: var(--begin-top);
+    z-index: 3;
+    transition: left .8s, top .8s, width .8s, visibility .8s;
+    cursor: zoom-out;
+    > img {
+      width: 100%;
+    }
+    &.active {
+      width: 70%;
+      left: 15%;
+      top: 15%;
+      visibility: visible;
+    }
+  }
+}

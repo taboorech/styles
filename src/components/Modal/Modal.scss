@@ -7,8 +7,9 @@
   top: 25%;
   height: 50%;
   padding: 1rem;
-  max-width: 100%;
-  transition: visibility .7s, max-width .7s;
+  visibility: hidden;
+  transform: scaleX(0);
+  transition: visibility .7s, transform .7s;
   z-index: 3;
   > div:not(:last-child) {
     margin-bottom: 1rem;
@@ -27,39 +28,26 @@
 
   &.active {
     visibility: visible;
-    max-width: 100%;
+    transform: scaleX(1);
   }
 
-  &.active::after {
-    width: 0;
-  }
-
-  &::after {
-    content: '';
-    width: 50%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 3;
-    background-color: #FFF;
-    transition: width .7s;
-  }
-
-  &.active::before {
-    width: 0;
-  }
-  
   &::before {
     content: '';
     position: absolute;
-    right: 0;
+    width: 100%;
     top: 0;
+    left: 0;
     bottom: 0;
-    width: 50%;
+    right: 0;
+    opacity: 1;
     z-index: 3;
-    transition: width .7s;
     background-color: #FFF;
+    transition: opacity .7s, z-index .7s;
+  }
+
+  &.active::before {
+    opacity: 0;
+    z-index: 1;
   }
 
 }

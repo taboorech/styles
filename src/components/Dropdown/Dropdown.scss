@@ -9,6 +9,7 @@ $backgroundColor: #FFF;
   transition: visibility ease-in-out .7s, max-height ease-in-out .8s;
   max-height: 0;
   overflow: hidden;
+  visibility: hidden;
   z-index: 3;
   a {
     &:hover {
@@ -23,6 +24,7 @@ $backgroundColor: #FFF;
 
   &.active {
     max-height: 100%;
+    visibility: visible;
   }
 
   &::after {

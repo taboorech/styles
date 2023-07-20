@@ -1,4 +1,5 @@
 export default class Managment {
+
   buttonsWavesEffectInit(elements) {
     const buttons = elements;
     buttons.forEach(button => {
@@ -41,20 +42,10 @@ export default class Managment {
       let yPosition = dropdownTrigger.offsetHeight + "px";
       dropdown.style.top = yPosition + "px";
 
-      // change state of menu. Visible / unvisible. Create backdrop
-      const backdrop = document.createElement('div');
-      backdrop.classList.add('Backdrop');
-      backdrop.onclick = () => {
-        backdrop.remove();
-        if(dropdown.classList.contains('active')) {
-          dropdown.classList.remove('active');
-          return dropdown.style.visibility = 'hidden';
-        }
-      }
+      const backdrop = this.backdropFunctions(dropdown);
       document.body.appendChild(backdrop);
 
-      dropdown.classList.add('active');
-      return dropdown.style.visibility = 'visible';
+      return dropdown.classList.add('active');
     })
   }
 
@@ -62,16 +53,8 @@ export default class Managment {
     modalTriggers.forEach(modalTrigger => {
       modalTrigger.addEventListener('click', (event) => {
         const modal = document.querySelector(`#${event.target.getAttribute('modal_target')}`);
-        
-        // create backdrop with settings
-        const backdrop = document.createElement('div');
-        backdrop.classList.add('Backdrop');
-        backdrop.onclick = () => {
-          backdrop.remove();
-          if(modal.classList.contains('active')) {
-            return modal.classList.remove('active');
-          }
-        }
+
+        const backdrop = this.backdropFunctions(modal);
 
         // set close events for buttons in footer
         const footerButtons = modal.querySelector('.modal-footer').children;
@@ -88,5 +71,76 @@ export default class Managment {
         return modal.classList.add('active');
       })
     })
+  }
+
+  mediaInit(mediaElements) {
+    mediaElements.forEach((media) => {
+      const element = media.querySelector('.Media-clone');
+      const elementToClick = media.querySelector('.Media');
+      element.style.setProperty('--begin-left', elementToClick.offsetLeft + 'px');      
+      element.style.setProperty('--begin-top', elementToClick.offsetTop + 'px');
+      element.style.setProperty('--begin-width', elementToClick.offsetWidth + 'px');
+      const clickHandler = () => {
+        
+        const secondClickHandler = () => {
+          backdrop.click();
+          media.removeEventListener('click', secondClickHandler);
+          media.addEventListener('click', clickHandler);
+        }
+
+        const closeFunc = () => {
+          const transitionEndFunc = () => {
+            elementToClick.classList.remove('active')
+            element.removeEventListener('transitionend', transitionEndFunc);
+          }
+          element.addEventListener('transitionend', transitionEndFunc);
+          media.removeEventListener('click', secondClickHandler);
+          media.addEventListener('click', clickHandler);
+        }
+
+        const backdrop = this.backdropFunctions(element, closeFunc);
+
+        document.body.appendChild(backdrop);
+        element.classList.add('active');
+        elementToClick.classList.add('active');
+
+        media.removeEventListener('click', clickHandler);
+        media.addEventListener('click', secondClickHandler);
+      };
+      media.addEventListener('click', clickHandler);
+    })
+  }
+
+  backdropFunctions(element, func) {
+    // element - element after which backdrop must to be
+    // func - additional code to backdrop click
+
+    // create or find backdrop
+    let backdrop = document.querySelector('.Backdrop');
+    if(!backdrop) {
+      backdrop = document.createElement('div');
+      backdrop.classList.add('Backdrop');
+    }
+    backdrop.onclick = () => {
+      backdrop.classList.remove('active');
+      window.onkeydown = null;
+      if(typeof func === 'function') {
+        func();
+      }
+      
+      return element.classList.remove('active');
+    }
+
+    backdrop.classList.add('active');
+
+    // set window keydown event to close backdrop on escape press
+    window.onkeydown = (event) => {
+      if(event.key !== "Escape") {
+        return;
+      }
+      backdrop.click();
+    };
+
+    return backdrop;
   }
 }
