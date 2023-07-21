@@ -27,8 +27,8 @@
     --begin-left: 0;
     --begin-top: 0;
     --begin-width: 0;
-    width: var(--begin-width);
     visibility: hidden;
+    width: var(--begin-width);
     left: var(--begin-left);
     top: var(--begin-top);
     z-index: 3;

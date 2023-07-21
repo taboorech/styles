@@ -7,6 +7,7 @@ import CardsPage from "./containers/CardsPage/CardsPage";
 import ModalsPage from "./containers/ModalsPage/ModalsPage";
 import CollectionsPage from "./containers/CollectionsPage/CollectionsPage";
 import MediaPage from "./containers/MediaPage/MediaPage";
+import AudioPlayerPage from "./containers/AudioPlayerPage/AudioPlayerPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/modals" element={<ModalsPage/>}></Route>
         <Route path="/collections" element={<CollectionsPage/>}></Route>
         <Route path="/media" element={<MediaPage/>}></Route>
+        <Route path="/audioPlayer" element={<AudioPlayerPage/>}></Route>
       </Routes>
     </Layout>
   );

@@ -18,12 +18,28 @@
   &.small {
     font-size: 12px;
   }
+  &.audioButton {
+    $borderSize: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-sizing: border-box;
+    background-clip: padding-box;
+    background: linear-gradient(#FFF, #FFF) padding-box, 
+    linear-gradient(to right, red, orange) border-box;
+    border: $borderSize solid transparent;
+    color: #000;
+    // color: linear-gradient(to right bottom, purple, red);
+    transition: content .5s;
+  }
   &.btn-circle {
     $size: 50px;
     width: $size;
     height: $size;
     border-radius: 100%;
     text-align: center;
+    vertical-align: middle;
     font-size: 25px;
     &.large {
       $size: 60px;

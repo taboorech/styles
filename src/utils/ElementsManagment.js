@@ -77,17 +77,27 @@ export default class Managment {
     mediaElements.forEach((media) => {
       const element = media.querySelector('.Media-clone');
       const elementToClick = media.querySelector('.Media');
-      element.style.setProperty('--begin-left', elementToClick.offsetLeft + 'px');      
-      element.style.setProperty('--begin-top', elementToClick.offsetTop + 'px');
-      element.style.setProperty('--begin-width', elementToClick.offsetWidth + 'px');
+
+      // set default left, top, width styles for block
+      window.addEventListener('load', () => {
+        element.style.setProperty('--begin-left', elementToClick.offsetLeft + 'px');
+        element.style.setProperty('--begin-top', elementToClick.offsetTop + 'px');
+        element.style.setProperty('--begin-width', elementToClick.offsetWidth + 'px');
+      });
+      
+      // set click handler
       const clickHandler = () => {
         
+        // function to set the image's second click event
+        // wherein second click set close event
         const secondClickHandler = () => {
           backdrop.click();
           media.removeEventListener('click', secondClickHandler);
           media.addEventListener('click', clickHandler);
         }
 
+        // function to add transition-end event to the default image element
+        // default image element show after big image element's transition end
         const closeFunc = () => {
           const transitionEndFunc = () => {
             elementToClick.classList.remove('active')
@@ -111,6 +121,101 @@ export default class Managment {
     })
   }
 
+  audioPlayerInit(audioPlayers) {
+    audioPlayers.forEach(audioPlayer => {
+      const audioSettings = new Audio('./files/under the influence x i was never there.mp3');
+      
+      const currentTime = audioPlayer.querySelector('.currentTime');
+      const durationTime = audioPlayer.querySelector('.durationTime');
+      const calculateTime = (time) => {
+        // convert from seconds to hours, minutes, seconds
+        // time - time in seconds
+        const minutes = Math.floor(time / 60);
+        const hours = Math.floor(minutes / 60);
+        let seconds = (time % 60).toFixed();
+        if(seconds < 10) {
+          seconds = "0" + seconds;
+        }
+        return hours > 0 ? `${hours}:${minutes}:${seconds}` : `${minutes}:${seconds}`;
+      }
+
+      // set play / pause settings
+      let play = false;
+      const playButton = audioPlayer.querySelector('.playButton');
+      const playState = async () => {
+        if(play) {
+          return await audioSettings.play()
+          .then(() => {
+            setInterval(changeProgress, 500);
+          })
+          .catch(err => {
+            console.log(err);
+          })
+        }
+        return audioSettings.pause();
+      }
+      playButton.onclick = async (event) => {
+        play = !play;
+        if(play) {
+          event.target.innerHTML = event.target.getAttribute("disable_play_button_symbol");
+        } else {
+          event.target.innerHTML = event.target.getAttribute("active_play_button_symbol");
+        }
+        playState();
+      }
+      
+      // update duration time on window load
+      window.addEventListener('load', () => {
+        durationTime.innerHTML = calculateTime(audioSettings.duration);
+        playButton.innerHTML = playButton.getAttribute("active_play_button_symbol");
+      })
+
+      // set progress bar's settings
+      const progressBar = audioPlayer.querySelector('.progressBar');
+      const progress = progressBar.querySelector('.progress');
+      
+      const calculateFunction = (event) => {
+        // function to change progress position on click
+        let currentProgress = ((event.clientX - progressBar.offsetLeft) * 100) / progressBar.offsetWidth;
+        if(currentProgress > 100) {
+          currentProgress = 100;
+        }
+        if(currentProgress < 0) {
+          currentProgress = 0;
+        }
+        progress.style.width = currentProgress + "%";
+
+        return currentProgress;
+      }
+      
+      progressBar.onmousedown = (event) => {
+        let currentProgress;
+        currentProgress = calculateFunction(event);
+        if(play) {
+          audioSettings.pause();
+        }
+        audioSettings.currentTime = (currentProgress / 100) * audioSettings.duration;
+        currentTime.innerHTML = calculateTime(audioSettings.currentTime);
+        window.onmousemove = (event) => {
+          currentProgress = calculateFunction(event);
+          audioSettings.currentTime = (currentProgress / 100) * audioSettings.duration;
+          currentTime.innerHTML = calculateTime(audioSettings.currentTime);
+        }
+        window.onmouseup = () => {
+          window.onmousemove = null;
+          playState();
+        }
+      }
+
+      const changeProgress = () => {
+        // dynamic progress change
+        let currentProgress = audioSettings.currentTime * 100 / audioSettings.duration;
+        currentTime.innerHTML = calculateTime(audioSettings.currentTime);
+        progress.style.width = currentProgress + "%";
+      }
+    })
+  }
+  
   backdropFunctions(element, func) {
     // element - element after which backdrop must to be
     // func - additional code to backdrop click

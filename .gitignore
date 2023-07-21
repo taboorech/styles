@@ -82,4 +82,7 @@ psd
 thumb
 sketch
 
+## ignore files
+public/files
+
 # End of https://www.toptal.com/developers/gitignore/api/react,images
