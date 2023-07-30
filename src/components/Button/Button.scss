@@ -19,7 +19,6 @@
     font-size: 12px;
   }
   &.audioButton {
-    $borderSize: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,11 +26,13 @@
     box-sizing: border-box;
     background-clip: padding-box;
     background: linear-gradient(#FFF, #FFF) padding-box, 
-    linear-gradient(to right, red, orange) border-box;
-    border: $borderSize solid transparent;
+      linear-gradient(to right, red, orange) border-box;
+    border: 5px solid transparent;
     color: #000;
-    // color: linear-gradient(to right bottom, purple, red);
-    transition: content .5s;
+    transition: box-shadow .3s;
+    &:hover {
+      box-shadow: 1px 2px 2px rgba(#000, 0.5);
+    }
   }
   &.btn-circle {
     $size: 50px;

@@ -1,16 +1,37 @@
+$barBackgroundColor: darkgray;
+$progressColor: #000;
+
 .AudioPlayer {
   display: flex;
   flex-direction: column;
+  .listBlock {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    .list-item {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .listSongName {
+        display: flex;
+        flex-direction: row;
+        .listSongPlay {
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
   .durationBlock {
     display: flex;
     align-items: center;
     .progressBar {
-      background-color: darkgray;
+      background-color: $barBackgroundColor;
       width: 100%;
       height: 5px;
       margin: 0 1rem;
+      cursor: pointer;
       .progress {
-        background-color: #000;
+        background-color: $progressColor;
         width: 0;
         height: 100%;
       }
@@ -18,6 +39,37 @@
   }
   .toolsBlock {
     display: flex;
+    .songName {
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      white-space: nowrap;
+      padding-left: 0.5rem;
+      margin-right: 0.5rem;
+      cursor: default;
+      > span {
+        $marginRight: 2rem;
+        display: flex;
+        animation-name: motion;
+        animation-duration: 4s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-play-state: paused;
+        &:first-child {
+          margin-right: $marginRight;
+        }
+        @keyframes motion {
+          100% {
+            transform: translateX(calc(-100% - #{$marginRight}));
+          }
+        }
+      }
+      &:hover {
+        > span {
+          animation-play-state: running;
+        }
+      }
+    }
     .buttonsBlock {
       display: flex;
       flex-direction: row;
@@ -27,6 +79,49 @@
         -webkit-user-select: none;
         -ms-user-select: none;
         user-select: none;
+      }
+    }
+    .volumeBlock {
+      display: flex;
+      align-items: center;
+      .repeatBlock {
+        .repeatButton {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          height: 2rem;
+          width: 2rem;
+          border-radius: 100%;
+          outline: none;
+          box-sizing: border-box;
+          background-clip: padding-box;
+          border: 2px solid transparent;
+          transition: box-shadow .3s;
+          cursor: pointer;
+          &.active {
+            background: linear-gradient(#FFF, #FFF) padding-box, 
+              linear-gradient(to right, red, orange) border-box;
+          }
+          &:hover {
+            box-shadow: 1px 2px 2px rgba(#000, 0.5);
+          }
+        }
+      }
+      .volumeBar {
+        background-color: $barBackgroundColor;
+        height: 5px;
+        margin: 0 1rem;
+        cursor: pointer;
+        .volumeIndicator {
+          position: absolute;
+          background-color: #FFF;
+          color: #000;
+        }
+        .volume {
+          background-color: $progressColor;
+          height: 100%;
+        }
       }
     }
   }

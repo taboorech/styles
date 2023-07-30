@@ -11,7 +11,7 @@ export default function AudioPlayerPage() {
 
   return(
     <div>
-      <AudioPlayer className='s6 offset-s3' />
+      <AudioPlayer className='s6 offset-s3' list={['./files/under the influence x i was never there.mp3', './files/TWISTED - WORTH NOTING.mp3', './files/dream on - aerosmith (sped up).mp3']}/>
     </div>
   )
 }

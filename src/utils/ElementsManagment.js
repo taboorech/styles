@@ -1,4 +1,6 @@
-export default class Managment {
+import { AudioPlayer } from "./AudioPlayer.class";
+
+export default class Managment extends AudioPlayer {
 
   buttonsWavesEffectInit(elements) {
     const buttons = elements;
@@ -123,96 +125,54 @@ export default class Managment {
 
   audioPlayerInit(audioPlayers) {
     audioPlayers.forEach(audioPlayer => {
-      const audioSettings = new Audio('./files/under the influence x i was never there.mp3');
+      let list = audioPlayer.getAttribute('list').split(',');
+
+      const songNameBlocks = (audioPlayer.querySelector('.songName')).querySelectorAll('span');
+
+      const prevSongButton = audioPlayer.querySelector('.prevSongButton');
+      const nextSongButton = audioPlayer.querySelector('.nextSongButton');
       
+      // find time elements
       const currentTime = audioPlayer.querySelector('.currentTime');
       const durationTime = audioPlayer.querySelector('.durationTime');
-      const calculateTime = (time) => {
-        // convert from seconds to hours, minutes, seconds
-        // time - time in seconds
-        const minutes = Math.floor(time / 60);
-        const hours = Math.floor(minutes / 60);
-        let seconds = (time % 60).toFixed();
-        if(seconds < 10) {
-          seconds = "0" + seconds;
-        }
-        return hours > 0 ? `${hours}:${minutes}:${seconds}` : `${minutes}:${seconds}`;
-      }
-
-      // set play / pause settings
-      let play = false;
-      const playButton = audioPlayer.querySelector('.playButton');
-      const playState = async () => {
-        if(play) {
-          return await audioSettings.play()
-          .then(() => {
-            setInterval(changeProgress, 500);
-          })
-          .catch(err => {
-            console.log(err);
-          })
-        }
-        return audioSettings.pause();
-      }
-      playButton.onclick = async (event) => {
-        play = !play;
-        if(play) {
-          event.target.innerHTML = event.target.getAttribute("disable_play_button_symbol");
-        } else {
-          event.target.innerHTML = event.target.getAttribute("active_play_button_symbol");
-        }
-        playState();
-      }
       
-      // update duration time on window load
-      window.addEventListener('load', () => {
-        durationTime.innerHTML = calculateTime(audioSettings.duration);
-        playButton.innerHTML = playButton.getAttribute("active_play_button_symbol");
-      })
-
-      // set progress bar's settings
+      // find play / pause button
+      const playButton = audioPlayer.querySelector('.playButton');
+      
+      // set play button default text
+      playButton.innerHTML = playButton.getAttribute("active_play_button_symbol");
+      
+      // find progress bar's elements
       const progressBar = audioPlayer.querySelector('.progressBar');
       const progress = progressBar.querySelector('.progress');
       
-      const calculateFunction = (event) => {
-        // function to change progress position on click
-        let currentProgress = ((event.clientX - progressBar.offsetLeft) * 100) / progressBar.offsetWidth;
-        if(currentProgress > 100) {
-          currentProgress = 100;
-        }
-        if(currentProgress < 0) {
-          currentProgress = 0;
-        }
-        progress.style.width = currentProgress + "%";
-
-        return currentProgress;
-      }
+      // find volume bar's elements
+      const volumeBar = audioPlayer.querySelector('.volumeBar');
+      const volume = volumeBar.querySelector('.volume');
+      const volumeIndicator = volumeBar.querySelector('.volumeIndicator');
       
-      progressBar.onmousedown = (event) => {
-        let currentProgress;
-        currentProgress = calculateFunction(event);
-        if(play) {
-          audioSettings.pause();
-        }
-        audioSettings.currentTime = (currentProgress / 100) * audioSettings.duration;
-        currentTime.innerHTML = calculateTime(audioSettings.currentTime);
-        window.onmousemove = (event) => {
-          currentProgress = calculateFunction(event);
-          audioSettings.currentTime = (currentProgress / 100) * audioSettings.duration;
-          currentTime.innerHTML = calculateTime(audioSettings.currentTime);
-        }
-        window.onmouseup = () => {
-          window.onmousemove = null;
-          playState();
-        }
-      }
+      const repeatButton = audioPlayer.querySelector('.repeatButton');
 
-      const changeProgress = () => {
-        // dynamic progress change
-        let currentProgress = audioSettings.currentTime * 100 / audioSettings.duration;
-        currentTime.innerHTML = calculateTime(audioSettings.currentTime);
-        progress.style.width = currentProgress + "%";
-      }
+      const listBlock = audioPlayer.querySelector('.listBlock');
+
+      this.init(
+        list, 
+        songNameBlocks, 
+        progressBar, 
+        progress, 
+        currentTime, 
+        durationTime, 
+        playButton, 
+        prevSongButton, 
+        nextSongButton,
+        volumeBar,
+        volume,
+        volumeIndicator,
+        repeatButton,
+        listBlock
+      );
+      this.changeSongName();
+
     })
   }
   
