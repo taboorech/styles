@@ -12,6 +12,7 @@ $sizeProcentStep: percentage((100 / 12) / 100);
 
 @for $i from 1 through 12 {
   $sizeProcentsSum: $sizeProcentsSum + $sizeProcentStep;
+
   .s#{$i} {
     width: $sizeProcentsSum;
   }
@@ -21,11 +22,11 @@ $sizeProcentStep: percentage((100 / 12) / 100);
   }
   
   @media screen and (min-width: 600px) {
-    .m#{$i} {
+    .col.m#{$i} {
       width: $sizeProcentsSum;
     }
 
-    .offset-m#{$i} {
+    .col.offset-m#{$i} {
       margin-left: $sizeProcentsSum;
     }
   }
@@ -41,11 +42,11 @@ $sizeProcentStep: percentage((100 / 12) / 100);
   }
 
   @media screen and (min-width: 1200px) {
-    .xl#{$i} {
+    .col.xl#{$i} {
       width: $sizeProcentsSum !important;
     }
 
-    .offset-xl#{$i} {
+    .col.offset-xl#{$i} {
       margin-left: $sizeProcentsSum !important;
     }
   }

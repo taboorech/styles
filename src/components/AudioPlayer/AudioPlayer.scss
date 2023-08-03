@@ -15,8 +15,18 @@ $progressColor: #000;
       .listSongName {
         display: flex;
         flex-direction: row;
+        align-items: center;
+        > div {
+          font-size: 20px;
+        }
+        .listSongPlayIndicator {
+          width: 0.3rem;
+          margin-right: 1rem;
+          color: red;
+        }
         .listSongPlay {
           margin-right: 1rem;
+          cursor: pointer;
         }
       }
     }

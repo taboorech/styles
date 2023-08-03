@@ -3,7 +3,8 @@ export class AudioPlayer {
   constructor() {
     this.audioSettings = new Audio();
     this.play = false;
-    this.count = 0;
+    this.count = +localStorage.getItem('currentSong') || 0;
+    this.playIndicators = [];
   }
 
   init(
@@ -43,12 +44,17 @@ export class AudioPlayer {
       this.audioSettings.src = this.list[this.count];
     }
     
-    // update duration time on metadata load
+    // update current and duration time on metadata load
     this.audioSettings.addEventListener('loadedmetadata', () => {
       if(!!this.audioSettings.src) {
         this.durationTime.innerHTML = this.calculateTime(this.audioSettings.duration);
+        this.progress.style.width = (localStorage.getItem('currentTime') || 0) + '%';
+        const calculateCurrentTime = (+localStorage.getItem('currentTime') / 100 || 0) * this.audioSettings.duration
+        this.audioSettings.currentTime = calculateCurrentTime;
+        this.changeProgress();
       }
     });
+
 
     this.progressBar.onmousedown = (event) => {
       this.progressBarMouseDown(event);
@@ -69,9 +75,17 @@ export class AudioPlayer {
     this.prevSongButton.onclick = () => this.prevSongButtonClick(this);
     this.nextSongButton.onclick = () => this.nextSongButtonClick(this);
 
+    this.volume.style.width = localStorage.getItem('volume') + "%";
+    this.audioSettings.volume = localStorage.getItem('volume') / 100;
     this.volumeBar.onmousedown = (event) => this.volumeBarMouseDown(event);
 
     this.repeatButton.onclick = this.repeatButtonClick.bind(this);
+
+    window.onresize = (event) => {
+      this.checkWindowSize(event.target.innerWidth, this);
+    }
+
+    this.checkWindowSize(window.innerWidth, this);
 
   }
   
@@ -97,6 +111,13 @@ export class AudioPlayer {
     this.songNameBlocks.forEach(songNameBlock => {
       songNameBlock.innerHTML = songName;
     });
+    this.playIndicators.forEach((playIndicator, index) => {
+      playIndicator.innerHTML = "";
+      if(index === this.count) {
+        playIndicator.innerHTML = ".ıl";
+        localStorage.setItem('currentSong', this.count);
+      }
+    })
   }
   
   calculateFunction(event, bar, progress) {
@@ -116,9 +137,13 @@ export class AudioPlayer {
   calculateTime(time) {
     // convert from seconds to hours, minutes, seconds
     // time - time in seconds
-    const minutes = Math.floor(time / 60);
+    let minutes = Math.floor(time / 60);
     const hours = Math.floor(minutes / 60);
     let seconds = (time % 60).toFixed();
+    if(seconds >= 60) {
+      seconds = 0;
+      minutes = minutes + 1;
+    }
     if(seconds < 10) {
       seconds = "0" + seconds;
     }
@@ -133,6 +158,7 @@ export class AudioPlayer {
     }
     this.currentTime.innerHTML = this.calculateTime(this.audioSettings.currentTime);
     this.progress.style.width = currentProgress + "%";
+    localStorage.setItem('currentTime', currentProgress);
   }
 
   progressBarMouseDown(event) {
@@ -154,12 +180,12 @@ export class AudioPlayer {
     }
   }
 
-  playButtonOnClick(event) {
+  playButtonOnClick() {
     this.play = !this.play;
     if(this.play) {
-      event.target.innerHTML = event.target.getAttribute("disable_play_button_symbol");
+      this.playButton.innerHTML = this.playButton.getAttribute("disable_play_button_symbol");
     } else {
-      event.target.innerHTML = event.target.getAttribute("active_play_button_symbol");
+      this.playButton.innerHTML = this.playButton.getAttribute("active_play_button_symbol");
     }
     this.playState();
   }
@@ -182,7 +208,9 @@ export class AudioPlayer {
       this.count -= 1;
     }
     this.audioSettings.src = this.list[this.count];
+    this.audioSettings.currentTime = 0;
     this.changeSongName();
+    this.changeProgress();
     return this.playState();
   }
 
@@ -193,7 +221,9 @@ export class AudioPlayer {
       this.count = 0;
     }
     this.audioSettings.src = this.list[this.count];
+    this.audioSettings.currentTime = 0;
     this.changeSongName();
+    this.changeProgress();
     return this.playState();
   }
 
@@ -212,6 +242,7 @@ export class AudioPlayer {
     }
     window.onmouseup = () => {
       window.onmousemove = null;
+      localStorage.setItem('volume', currentProgress);
       this.volumeIndicator.hidden = true;
     }
 
@@ -227,19 +258,33 @@ export class AudioPlayer {
   }
 
   fillPlayList() {
-    this.list.forEach(song => {
+    this.list.forEach((song, index) => {
       const audio = new Audio();
       const listItem = document.createElement('div');
       listItem.classList.add('list-item');
+      listItem.classList.add('col');
       listItem.classList.add('s10');
       listItem.classList.add('offset-s1');
+      listItem.classList.add('m8');
+      listItem.classList.add('offset-m2');
+      listItem.classList.add('l10');
+      listItem.classList.add('offset-l1');
       
       const listSongName = document.createElement('div');
       listSongName.classList.add('listSongName');
+      const listSongPlayIndicator = document.createElement('div');
+      listSongPlayIndicator.classList.add('listSongPlayIndicator');
+      this.playIndicators.push(listSongPlayIndicator);
+
       const listSongPlay = document.createElement('div');
-      listSongPlay.innerHTML = "▶";
+      listSongPlay.innerHTML = this.playButton.getAttribute('active_play_button_symbol');
+      listSongPlay.onclick = () => {
+        this.count = index;
+        this.listPlayButtonClick();
+      }
       listSongPlay.classList.add('listSongPlay');
       const spanName = document.createElement('span');
+      listSongName.appendChild(listSongPlayIndicator);
       listSongName.appendChild(listSongPlay);
       listSongName.appendChild(spanName);
       
@@ -254,6 +299,30 @@ export class AudioPlayer {
       this.listBlock.appendChild(listItem);
       audio.src = song;
     })
+  }
+
+  listPlayButtonClick() {
+    this.audioSettings.src = this.list[this.count];
+    this.audioSettings.currentTime = 0;
+    this.changeProgress();
+    this.changeSongName();
+    if(!this.play) {
+      return this.playButtonOnClick();
+    }
+    return this.playState();
+  }
+
+  checkWindowSize(size) {
+    if(size < 750) {
+      this.playButton.classList.add('small');
+      this.prevSongButton.classList.add('small');
+      this.nextSongButton.classList.add('small');
+      return;
+    }
+    this.playButton.classList.remove('small');
+    this.prevSongButton.classList.remove('small');
+    this.nextSongButton.classList.remove('small');
+    return;
   }
 
 }

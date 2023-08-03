@@ -43,8 +43,8 @@ export default function ModalsPage() {
           </>
         }
       >
-        <Button className={'waves-effect s4 offset-s1 l2 offset-l7'}>FFF</Button>
-        <Button className={'waves-effect red s4 offset-s1 l2 offset-l1'}>FFF</Button>
+        <Button className={'col waves-effect s4 offset-s1 l2 offset-l7'}>FFF</Button>
+        <Button className={'col waves-effect red s4 offset-s1 l2 offset-l1'}>FFF</Button>
       </Modal>
       <Button className={'waves-effect modal-trigger'} modal_target = "modal1">FFF</Button>
     </div>

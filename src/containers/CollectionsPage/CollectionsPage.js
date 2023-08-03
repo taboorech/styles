@@ -3,7 +3,7 @@ import Collection from "../../components/Collection/Collection";
 export default function CollectionsPage() {
   return (
     <div>
-      <Collection className="s6 offset-s3 with-link">
+      <Collection className="col s6 offset-s3 with-link">
         <div className={"collection-item"}>FFF</div>
         <div className={"collection-item"}>FFF</div>
         <div className={"collection-item"}>FFF
