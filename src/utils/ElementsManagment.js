@@ -175,6 +175,24 @@ export default class Managment extends AudioPlayer {
 
     })
   }
+
+  slideMenuInit(additionalMenu) {
+    const slideButton = additionalMenu.querySelector('.slideButton');
+    slideButton.onclick = () => {
+      const additionalBackdropClickFunction = () => {
+        slideButton.style.left = 0;
+        slideButton.classList.remove('active');
+      }
+      const backdrop = this.backdropFunctions(additionalMenu, additionalBackdropClickFunction);
+      if(additionalMenu.classList.contains('active')) {
+        return backdrop.click();
+      }
+      slideButton.style.left = additionalMenu.offsetWidth + 'px';
+      slideButton.classList.add('active');
+      document.body.appendChild(backdrop);
+      return additionalMenu.classList.add('active');
+    }
+  }
   
   backdropFunctions(element, func) {
     // element - element after which backdrop must to be
