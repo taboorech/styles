@@ -1,0 +1,51 @@
+.Footer {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  height: 12rem;
+  background-color: #ff0037;
+  color: #FFF;
+  .mainInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 70%;
+    background-color: transparent;
+    padding: 1rem;
+    > div {
+      width: 50%;
+      h3 {
+        margin: 0;
+        margin-bottom: 0.5rem;
+      }
+    }
+    .content {
+      border-right: 1px solid #FFF;
+      padding-right: 2rem;
+      text-align: justify;
+    }
+    .links {
+      margin-left: 1rem;
+      > a {
+        color: #FFF;
+        padding: 0;
+      }
+    }
+  }
+  .copyRight {
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+    height: 30%;
+    background-color: darken(#ff0037, 25%);
+    .copyRightVersion {
+      width: 50%;
+      padding-right: 1rem;
+    }
+    .author {
+      color: #FFF;
+      padding: 0;
+    }
+  }
+}

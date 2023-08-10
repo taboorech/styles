@@ -9,6 +9,8 @@ import CollectionsPage from "./containers/CollectionsPage/CollectionsPage";
 import MediaPage from "./containers/MediaPage/MediaPage";
 import AudioPlayerPage from "./containers/AudioPlayerPage/AudioPlayerPage";
 import NavbarPage from "./containers/NavbarPage/NavbarPage";
+import TabsPage from "./containers/TabsPage/TabsPage";
+import FooterPage from "./containers/FooterPage/FooterPage";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Route path="/media" element={<MediaPage/>}></Route>
         <Route path="/audioPlayer" element={<AudioPlayerPage/>}></Route>
         <Route path="/navbar" element={<NavbarPage/>}></Route>
+        <Route path="/tabs" element={<TabsPage/>}></Route>
+        <Route path="/footer" element={<FooterPage/>}></Route>
       </Routes>
     </Layout>
   );

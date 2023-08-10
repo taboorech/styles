@@ -1,0 +1,28 @@
+.Tabs {
+  display: flex;
+  flex-direction: column;
+  .tabsNav {
+    $tabColor: red;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    .tabsNavItem {
+      padding: 0.5rem;
+      padding-bottom: 0.2rem;
+      // color: $tabColor;
+      color: #000;
+      transition: color .3s;
+    }
+    .indicator {
+      background-color: $tabColor;
+      position: absolute;
+      align-self: flex-end;
+      height: 0.2rem;
+      left: 0;
+      transition: left ease-in-out .3s;
+    }
+  }
+  .tabsBlock {
+    display: none;
+  }
+}

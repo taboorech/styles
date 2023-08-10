@@ -193,6 +193,41 @@ export default class Managment extends AudioPlayer {
       return additionalMenu.classList.add('active');
     }
   }
+
+  tabsInit(tabs) {
+    tabs.forEach(tab => {
+      const tabNavbar = tab.children[0];
+      const indicator = tabNavbar.querySelector('.indicator');
+      const tabPages = tabNavbar.querySelectorAll('.tabsNavItem');
+      const tabBlocks = tab.querySelectorAll('.tabsBlock');
+      indicator.style.width = tabPages[0].offsetWidth + 'px';
+      const activePage = window.location.hash.replace('#', '');
+      if(!activePage) {
+        tabPages[0].style.color = window.getComputedStyle(indicator).backgroundColor;
+      }
+      [...tabPages].map((tabPage, index) => {
+        if (new URL(tabPage.href).hash === '#' + activePage) {
+          tabPage.style.color = window.getComputedStyle(indicator).backgroundColor;
+          indicator.style.left = tabPage.offsetLeft + 'px';
+          tabBlocks[index].style.display = 'block';
+          tabPage.setAttribute('active', true);
+        }
+        return tabPage.onclick = () => {
+          indicator.style.left = tabPage.offsetLeft + 'px';
+          if(!tabPage.getAttribute('active')) {
+            [...tabPages].map((tabPageDeep, index) => {
+              tabPageDeep.style.color = window.getComputedStyle(tabPage).color;
+              tabPageDeep.removeAttribute('active');
+              return tabBlocks[index].style.display = 'none';
+            });
+          }
+          tabPage.setAttribute('active', true);
+          tabPage.style.color = window.getComputedStyle(indicator).backgroundColor;
+          tabBlocks[index].style.display = 'block';
+        }
+      })
+    })
+  }
   
   backdropFunctions(element, func) {
     // element - element after which backdrop must to be
