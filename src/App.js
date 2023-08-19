@@ -11,6 +11,8 @@ import AudioPlayerPage from "./containers/AudioPlayerPage/AudioPlayerPage";
 import NavbarPage from "./containers/NavbarPage/NavbarPage";
 import TabsPage from "./containers/TabsPage/TabsPage";
 import FooterPage from "./containers/FooterPage/FooterPage";
+import PreloaderPage from "./containers/PreloaderPage/PreloaderPage";
+import SliderPage from "./containers/SliderPage/SliderPage";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
         <Route path="/navbar" element={<NavbarPage/>}></Route>
         <Route path="/tabs" element={<TabsPage/>}></Route>
         <Route path="/footer" element={<FooterPage/>}></Route>
+        <Route path="/preloader" element={<PreloaderPage/>}></Route>
+        <Route path="/slider" element={<SliderPage/>}></Route>
       </Routes>
     </Layout>
   );

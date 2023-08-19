@@ -1,27 +1,25 @@
 import './Footer.scss';
 
-export default function Footer() {
+export default function Footer(props) {
   return (
     <footer className="Footer">
       <div className="mainInfo">
         <div className='content'>
-          <h3>MAIN TEXT</h3>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-          Etiam congue purus id elit maximus, quis pretium eros volutpat. 
-          Maecenas eleifend hendrerit tortor, non mattis dolor ultrices sit amet. 
+          <h3>{props.mainText}</h3>
+          {props.description}
         </div>
         <div className='links'>
           <h3>Links</h3>
-          <a href='#!'>FFF</a>
-          <a href='#!'>FFF</a>
-          <a href='#!'>FFF</a>
+          {props.children}
         </div>
       </div>
       <div className="copyRight">
         <div className='copyRightVersion'>
-          © Copyright 2023
+          {props.copyRightText}
         </div>
-        <a href='#!' className='author'>FFF</a>
+        <a href={props.authorLink} className='author'>
+          {props.author}
+        </a>
       </div>
     </footer>
   )

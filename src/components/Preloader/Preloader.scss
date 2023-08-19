@@ -1,0 +1,56 @@
+.Preloader {
+  background-color: #b8b8b8;
+  height: 5px;
+  > div {
+    height: 100%;
+    background-color: #5a5a5a;
+  }
+  &.circle {
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    > div {
+      $size: 50px;
+      border-top: 5px solid #5a5a5a;
+      border-right: 5px solid #5a5a5a;
+      border-bottom: 5px solid transparent;
+      border-left: 5px solid transparent;
+      animation-name: rotate;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      background-color: transparent;
+      border-radius: 50%;
+      width: $size;
+      height: $size;
+      @keyframes rotate {
+        from {
+          transform: rotate(-45deg);
+        }
+        to {
+          transform: rotate(315deg);
+        }
+      }
+    }
+  }
+  &.indeterminate {
+    overflow: hidden;
+    > div {
+      animation-name: download;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      width: 40%;
+      position: relative;
+      @keyframes download {
+        from {
+          left: -100%;
+        }
+        to {
+          left: 100%;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+.SliderBlock {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  .slider {
+    overflow: hidden;
+    width: 100%;
+    .sliderRow {
+      display: flex;
+      flex-direction: row;
+      position: relative;
+      left: 0;
+      transition: left .5s;
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .sliderButton {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    background-color: rgba(lightgray, 0.6);
+    opacity: 0;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: opacity .5s;
+    font-weight: bold;
+    font-size: 20px;
+    user-select: none;
+    
+    &[data-attribute = 'left'] {
+      left: 5px;
+    }
+    &[data-attribute = 'right'] {
+      right: 5px;
+    }
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

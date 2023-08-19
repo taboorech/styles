@@ -228,6 +228,33 @@ export default class Managment extends AudioPlayer {
       })
     })
   }
+
+  sliderInit(sliders) {
+    sliders.forEach(slider => {
+      const sliderButtons = slider.querySelectorAll('.sliderButton');
+
+      const sliderRow = slider.querySelector('.sliderRow');
+      const imageInRow = sliderRow.querySelector('img');
+      let position = 0;
+      
+      sliderButtons.forEach(sliderButton => {
+        sliderButton.onclick = () => {
+          if(sliderButton.getAttribute('data-attribute') === 'right') {
+            position -= imageInRow.offsetWidth;
+            if(Math.abs(position) >= imageInRow.offsetWidth * sliderRow.children.length) {
+              position = 0;
+            }
+          } else {
+            position += imageInRow.offsetWidth;
+            if(position > 0) {
+              position = -imageInRow.offsetWidth * (sliderRow.children.length - 1);
+            }
+          }
+          sliderRow.style.left = position + 'px';
+        }
+      })
+    });
+  }
   
   backdropFunctions(element, func) {
     // element - element after which backdrop must to be

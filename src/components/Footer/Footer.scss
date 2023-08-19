@@ -4,8 +4,9 @@
   display: flex;
   flex-direction: column;
   height: 12rem;
-  background-color: #ff0037;
+  background-color: #ff0040;
   color: #FFF;
+  width: 100%;
   .mainInfo {
     display: flex;
     flex-direction: row;
@@ -38,7 +39,7 @@
     align-items: center;
     padding-left: 1rem;
     height: 30%;
-    background-color: darken(#ff0037, 25%);
+    background-color: darken(#ff0040, 25%);
     .copyRightVersion {
       width: 50%;
       padding-right: 1rem;
