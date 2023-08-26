@@ -1,0 +1,82 @@
+.Collapsible {
+  height: auto;
+  border-radius: 0 0 7px 0;
+  box-shadow: 1px 1px 3px #000;
+  border: none;
+  .title-block {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    z-index: 1;
+    align-items: center;
+    margin: 1rem 0.5rem;
+    padding: 1rem 0.5rem 0 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all ease-in-out .7s;
+    a {
+      color: #000;
+    }
+    .secondary-content {
+      display: flex;
+      flex-direction: row;
+      color: #000;
+      .expires.missed {
+        color: red;
+      }
+      .buttonsBlock {
+        margin-left: 3rem;
+      }
+    }
+  }
+
+  .collapsible-body {
+    position: relative;
+    height: auto;
+    overflow: hidden;
+    z-index: 1;
+    margin-top: 0;
+    .collapsible-body-content {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition-duration: 2s;
+      transition-timing-function: ease-in-out;
+      margin-top: -200%;
+      .descrription-block {
+        text-align: justify;
+      }
+      .attachments-block {
+        display: flex;
+        margin-top: 1rem;
+        flex-direction: column;
+        text-align: justify;
+        a {
+          color: #3EA7ED;
+        }
+      }
+      .button-block {
+        margin-top: 2rem;
+        margin-left: 0rem;
+        margin-bottom: 0;
+        a {
+          background: #4CFAAE;
+        }
+      }
+    }
+  }
+
+  &.active {
+    .title-block {
+      padding-bottom: 0.7rem;
+      border-bottom: 1px solid #2DD6D6;
+    }
+    .collapsible-body {
+      .collapsible-body-content {
+        margin: 0 0 1rem 0.5rem;
+        transition-duration: .7s;
+        transition-timing-function: ease-in-out;
+      }
+    }
+  }
+}

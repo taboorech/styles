@@ -11,7 +11,11 @@ export default function SliderPage() {
 
   return(
     <div>
-      <Slider/>
+      <Slider>
+        <img src="./images/card-bg.jpg" alt="sliderImage"/>
+        <img src="./images/card-bg.jpg" alt="sliderImage"/>
+        <img src="./images/card-bg.jpg" alt="sliderImage"/>
+      </Slider>
     </div>
   )
 }

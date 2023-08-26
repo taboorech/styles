@@ -13,6 +13,7 @@ import TabsPage from "./containers/TabsPage/TabsPage";
 import FooterPage from "./containers/FooterPage/FooterPage";
 import PreloaderPage from "./containers/PreloaderPage/PreloaderPage";
 import SliderPage from "./containers/SliderPage/SliderPage";
+import CollapsiblePage from "./containers/CollapsiblePage/CollapsiblePage";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/footer" element={<FooterPage/>}></Route>
         <Route path="/preloader" element={<PreloaderPage/>}></Route>
         <Route path="/slider" element={<SliderPage/>}></Route>
+        <Route path="/collapsible" element={<CollapsiblePage/>}></Route>
       </Routes>
     </Layout>
   );

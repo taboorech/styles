@@ -255,6 +255,17 @@ export default class Managment extends AudioPlayer {
       })
     });
   }
+
+  collapsibleInit(collapsibles) {
+    collapsibles.forEach(collapsible => {
+      collapsible.onclick = () => {
+        if(collapsible.classList.contains('active')) {
+          return collapsible.classList.remove('active');
+        }
+        return collapsible.classList.add('active');
+      }
+    })
+  }
   
   backdropFunctions(element, func) {
     // element - element after which backdrop must to be
